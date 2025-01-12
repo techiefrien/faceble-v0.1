@@ -1,0 +1,292 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} All Events {% endblock title %}
+
+{% block content %}
+
+{% include 'inc/alert.html' %}
+<style>
+    table , tr , td , th{
+        padding:10px 0;
+    }
+</style>
+
+
+<div class="dashboard-main-body">
+
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
+  <h6 class="fw-semibold mb-0">Event Info</h6>
+  <ul class="d-flex align-items-center gap-2">
+    <li class="fw-medium">
+      <a href="{% url 'home' %}" class="d-flex align-items-center gap-1 hover-text-primary">
+        <iconify-icon icon="solar:home-smile-angle-outline" class="icon text-lg"></iconify-icon>
+        Dashboard
+      </a>
+    </li>
+    <li>-</li>
+    <li class="fw-medium">Components / Event Info</li>
+  </ul>
+</div>
+
+    <div class="row gy-4">
+    
+        
+     
+        <div class="col-xxl-6">
+            <div class="card p-0 overflow-hidden position-relative radius-12 h-100">
+                <div class="card-header py-16 px-24 bg-base border border-end-0 border-start-0 border-top-0">
+                    <h6 class="text-lg mb-0">Plan & Event Info</h6>
+                </div>
+                <div class="card-body p-24 pt-10">
+                    <ul class="nav button-tab nav-pills mb-16" id="pills-tab-four" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link d-flex align-items-center gap-2 fw-semibold text-primary-light radius-4 px-16 py-10 active" id="pills-button-icon-home-tab" data-bs-toggle="pill" data-bs-target="#pills-button-icon-home" type="button" role="tab" aria-controls="pills-button-icon-home" aria-selected="true">
+                            <iconify-icon icon="stash:plan-light" class="text-xl"></iconify-icon>
+                            <span class="line-height-1">Plan Info</span>
+                          </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link d-flex align-items-center gap-2 fw-semibold text-primary-light radius-4 px-16 py-10" id="pills-button-icon-details-tab" data-bs-toggle="pill" data-bs-target="#pills-button-icon-details" type="button" role="tab" aria-controls="pills-button-icon-details" aria-selected="false">
+                            <iconify-icon icon="tabler:edit" class="text-xl"></iconify-icon>
+                            <span class="line-height-1">Edit Event Info</span>
+                          </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link d-flex align-items-center gap-2 fw-semibold text-primary-light radius-4 px-16 py-10" id="pills-button-icon--viewdetails-tab" data-bs-toggle="pill" data-bs-target="#pills-button-icon-viewdetails" type="button" role="tab" aria-controls="pills-button-icon-viewdetails" aria-selected="false">
+                              <iconify-icon icon="fluent:people-team-20-regular" class="text-xl"></iconify-icon>
+                              <span class="line-height-1">View Event Info</span>
+                            </button>
+                          </li>
+                       
+                    </ul>
+                    <div class="tab-content" id="pills-tab-fourContent">
+                        <div class="tab-pane fade show active" id="pills-button-icon-home" role="tabpanel" aria-labelledby="pills-button-icon-home-tab" tabindex="0">
+                          <div class="col-xxl-12 col-sm-12">
+                            <div class="card h-100 radius-12 bg-gradient-purple">
+                                <div class="card-body p-24">
+                                    <div class="w-64-px h-64-px d-inline-flex align-items-center justify-content-center bg-lilac-600 text-white mb-16 radius-12">
+                                        <iconify-icon icon="solar:medal-ribbons-star-bold" class="h5 mb-0"></iconify-icon> 
+                                    </div>
+                                    <h6 class="mb-8">{{event.plan}}</h6>
+                                    <p class="card-text mb-8 text-secondary-light">Random Text gateway to the Origin al the Works Platform, & your unique block chain gateway identity.</p>
+                                    <a href="javascript:void(0)" class="btn text-lilac-600 hover-text-lilac px-0 py-0 mt-16 d-inline-flex align-items-center gap-2"> 
+                                        Read More <iconify-icon icon="iconamoon:arrow-right-2" class="text-xl"></iconify-icon> 
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-24">
+                          <div class="col-xxl-3 col-sm-6 " style="padding-left: 0 !important;">
+                              <div class="card-body p-20 bg-base border h-100 d-flex flex-column justify-content-center border-end-0">
+                                  <div class="d-flex flex-wrap align-items-center justify-content-between gap-1 mb-8">
+                                      <div>
+                                          <span class="mb-12 w-44-px h-44-px text-primary-600 bg-primary-light border border-primary-light-white flex-shrink-0 d-flex justify-content-center align-items-center radius-8 h6 mb-12">
+                                              <iconify-icon icon="flowbite:upload-solid"  class="icon"></iconify-icon>  
+                                          </span>
+                                          <span class="mb-1 fw-medium text-secondary-light text-md">Upload Limit</span>
+                                          <h6 class="fw-semibold text-primary-light mb-1">{{event.photos.count}} <small class="text-sm">Used</small></h6>
+                                      </div>
+                                  </div>
+                                  <p class="text-sm mb-0">Available  Limit<span class="bg-success-focus px-1 rounded-2 fw-medium text-success-main text-sm"> {{event.upload_limit}}</span> for this Plan</p>
+                              </div>
+                          </div>
+                          <div class="col-xxl-3 col-sm-6 px-0">
+                              <div class="card-body p-20 bg-base border h-100 d-flex flex-column justify-content-center border-end-0">
+                                  <div class="d-flex flex-wrap align-items-center justify-content-between gap-1 mb-8">
+                                      <div>
+                                          <span class="mb-12 w-44-px h-44-px text-yellow bg-yellow-light border border-yellow-light-white flex-shrink-0 d-flex justify-content-center align-items-center radius-8 h6 mb-12">
+                                              <iconify-icon icon="fontisto:mobile" class="icon"></iconify-icon>  
+                                          </span>
+                                          <span class="mb-1 fw-medium text-secondary-light text-md">Selfie Limit</span>
+                                          <h6 class="fw-semibold text-primary-light mb-1">{{event.guest.count}} <small class="text-sm">Used</small></h6>
+                                      </div>
+                                  </div>
+                                  <p class="text-sm mb-0">Available Limit  <span class="bg-danger-focus px-1 rounded-2 fw-medium text-danger-main text-sm">{{event.selfie_limit}}</span> for this event</p>
+                              </div>
+                          </div>
+                          <div class="col-xxl-3 col-sm-6 px-0">
+                              <div class="card-body p-20 bg-base border h-100 d-flex flex-column justify-content-center border-end-0">
+                                  <div class="d-flex flex-wrap align-items-center justify-content-between gap-1 mb-8">
+                                      <div>
+                                          <span class="mb-12 w-44-px h-44-px text-lilac bg-lilac-light border border-lilac-light-white flex-shrink-0 d-flex justify-content-center align-items-center radius-8 h6 mb-12">
+                                              <iconify-icon icon="icon-park-outline:ios-face-recognition" class="icon"></iconify-icon>  
+                                          </span>
+                                          <span class="mb-1 fw-medium text-secondary-light text-md">Face Recognition Limit</span>
+                                          <h6 class="fw-semibold text-primary-light mb-1">{{event.ai_matches_limit}} <small  class="text-sm">Used</small></h6>
+                                      </div>
+                                  </div>
+                                  <p class="text-sm mb-0">Available Limit  <span class="bg-success-focus px-1 rounded-2 fw-medium text-success-main text-sm">{{event.ai_matches}}</span> for this event</p>
+                              </div>
+                          </div>
+                          <div class="col-xxl-3 col-sm-6 ps-0">
+                              <div class="card-body p-20 bg-base border h-100 d-flex flex-column justify-content-center">
+                                  <div class="d-flex flex-wrap align-items-center justify-content-between gap-1 mb-8">
+                                      <div>
+                                          <span class="mb-12 w-44-px h-44-px text-pink bg-pink-light border border-pink-light-white flex-shrink-0 d-flex justify-content-center align-items-center radius-8 h6 mb-12">
+                                              <iconify-icon icon="ion:time-sharp" class="icon"></iconify-icon>  
+                                          </span>
+                                          <span class="mb-1 fw-medium text-secondary-light text-md">Time Validity</span>
+                                          <h6 class="fw-semibold text-primary-light mb-1">
+                                            {% if date_validity == true %}
+                                                <span class="text-danger">Expired</span>
+                                            {% else %}
+                                                {{date_validity}} <small class="text-sm">Days Finished</small>
+                                            {% endif %}
+                                          </h6>
+                                      </div>
+                                  </div>
+                                  <p class="text-sm mb-0">Available for <span class="bg-success-focus px-1 rounded-2 fw-medium text-success-main text-sm">{{event.plan.valid_date}}</span>Days for this plan</p>
+                              </div>
+                          </div>
+                      </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-button-icon-details" role="tabpanel" aria-labelledby="pills-button-icon-details-tab" tabindex="0">
+                            <div class="col-xxl-12 col-sm-12">
+
+                                <div class="card " style="padding: 0 ; padding-top:30px;">
+                                    <div class="card-header">
+                                      <h6 class="mb-4 mt-4" >Create New Event</h6>
+                                    </div>
+                                    <div class="card-body">
+                                     <form action="{% url 'edit-event-info' event.id %}" method="post" enctype="multipart/form-data" class="form" id="event-form">
+                                     {% csrf_token %}
+                                      <div class="row gy-3">
+                                       <div class="col-md-6">
+                                        <div class="col-12">
+                                          <label class="form-label">Event Name</label>
+                                          <input type="text" name="name" value="{{event.event_name}}" id="ename" class="form-control" placeholder="Enter the event name" required>
+                                        </div>
+                                        <div class="col-12">
+                                          <label class="form-label">Event banner </label>
+                                          <input class="form-control form-control-sm mb-8"  id="ebanner" name="banner" type="file" required>
+                                          {% if event.event_banner %}
+                                          <p class="mt-2">
+                                              Current File: 
+                                              <a href="{{ event.event_banner.url }}" target="_blank">View Image</a>
+                                          </p>
+                                      {% endif %}
+                                        </div>
+                                        <div class="col-12">
+                                          <label class="form-label">Event Category</label>
+                                          <select name="category" class="form-select" id="ecat"  required>
+                                              {% for cat in event_category %}
+                                                    {% if event.category.id == cat.id %}
+                                                        <option selected value="{{cat.categoy_name}}">{{cat.categoy_name}}</option>
+                                                    {% else %}
+                                                        <option value="{{cat.categoy_name}}">{{cat.categoy_name}}</option>
+                                                    {% endif %}
+                                              {% endfor %}
+                                          </select>
+                                        </div>
+                                       </div>
+                                      <div class="col-md-6">
+                                        <div class="col-12">
+                                         
+                          
+                          
+                                          <div class="col-12" style="margin-top: 10px;">
+                                            <label class="form-label">Held On </label>
+                                            <input value="{{ event.held_on|date:'Y-m-d'}}"  class="form-control form-control" id="edate" name="date" type="date" required>
+                                          </div>
+                          
+                                        </div>
+                                      </div>
+                                       
+                          
+                                        <div class="d-flex flex-wrap justify-content-between align-items-center mt-4 mb-3 gap-3" style=" margin-top:30px !important; margin: 30px 0;">
+                                          <!-- Add Event Button -->
+                                          <button type="submit" class="btn btn-success">
+                                            <i class="fa-solid fa-folder-plus"></i> Save Details
+                                          </button>
+                                        
+                                          <!-- Event Button Group -->
+                                          <div class="d-flex flex-wrap gap-3">
+                                            <button type="reset" class="btn btn-danger">
+                                              <i class="fa-solid fa-rotate-right"></i> Reset
+                                            </button>
+                                          
+                                          </div>
+                                        </div>
+                                        
+                                    
+                                      </div>
+                          
+                                    
+                                      
+                          
+                                     </form>
+                                    </div>
+                                  </div>
+
+
+
+                            </div>
+                        </div>
+                       
+
+                        <div class="tab-pane fade" id="pills-button-icon-viewdetails" role="tabpanel" aria-labelledby="pills-button-icon-viewdetails-tab" tabindex="0">
+                            <div class="col-xxl-12 col-sm-12">
+
+                             <div>
+                                <table class="table-sm table-borderless">
+                                    <tr>
+                                        <th style="display: flex;"><iconify-icon icon="mingcute:subtitle-line" width="24" height="24"></iconify-icon>   Event Title</th>
+                                        <td>:</td>
+                                        <td>{{event.event_name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="display: flex;"><iconify-icon icon="solar:key-bold" width="24" height="24"></iconify-icon> Event Key</th>
+                                        <td>:</td>
+                                        <td>{{event.event_key}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="display: flex;"><iconify-icon icon="material-symbols:planner-banner-ad-pt-outline" width="24" height="24"></iconify-icon>  Event Banner</th>
+                                        <td>:</td>
+                                        
+                                        <td><a href="{{ event.event_banner.url }}" target="_blank">Click to View Banner</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="display: flex;"><iconify-icon icon="iconamoon:category" width="24" height="24"></iconify-icon>  Event Category</th>
+                                        <td>:</td>
+                                       
+                                        <td>{{event.event_category}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="display: flex;"><iconify-icon icon="streamline:hand-held-tablet-writing-solid" width="20" height="20"></iconify-icon>  Held On</th>
+                                        <td>:</td>
+                                        <td>{{event.held_on}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="display: flex;"><iconify-icon icon="eos-icons:subscriptions-created-outlined" width="20" height="20"></iconify-icon>  Created At</th>
+                                        <td>:</td>
+                                      
+                                        <td>{{event.created_at}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="display: flex;"><iconify-icon icon="stash:plan-duotone" width="24" height="24"></iconify-icon>   Event Plan</th>
+                                        <td>:</td>
+                                        <td>{{event.plan}} - Rs.{{event.plan.price}}</td>
+                                    </tr>
+                                  
+                                  </table>
+                             </div>
+
+
+
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>  
+            </div>
+        </div>
+      
+    
+    </div>
+
+  </div>
+
+
+
+
+{% endblock content %}

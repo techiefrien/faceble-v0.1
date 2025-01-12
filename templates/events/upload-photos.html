@@ -1,0 +1,296 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} All Events {% endblock title %}
+
+{% block content %}
+
+{% include 'inc/alert.html' %}
+<style>
+    table,
+    tr,
+    td,
+    th {
+        padding: 10px 0;
+    }
+
+    #upload-btn-div {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+    }
+
+    @media screen and (max-width:768px) {
+        #upload-btn-div {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        #upload-btn-div button {
+            width: 100%;
+        }
+    }
+</style>
+
+
+<div class="dashboard-main-body">
+
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
+        <h6 class="fw-semibold mb-0">Event Info</h6>
+        <ul class="d-flex align-items-center gap-2">
+            <li class="fw-medium">
+                <a href="{% url 'home' %}" class="d-flex align-items-center gap-1 hover-text-primary">
+                    <iconify-icon icon="solar:home-smile-angle-outline" class="icon text-lg"></iconify-icon>
+                    Dashboard
+                </a>
+            </li>
+            <li>-</li>
+            <li class="fw-medium">Components / Event Info</li>
+        </ul>
+    </div>
+
+    <div class="row gy-4">
+
+
+
+        <div class="col-xxl-6">
+            <div class="card p-0 overflow-hidden position-relative radius-12 h-100">
+                <div class="card-header py-16 px-24 bg-base border border-end-0 border-start-0 border-top-0">
+                    <h6 class="text-lg mb-0">Plan & Event Info</h6>
+                </div>
+                <div class="card-body p-24 pt-10">
+                    <ul class="nav button-tab nav-pills mb-16" id="pills-tab-four" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button
+                                class="nav-link d-flex align-items-center gap-2 fw-semibold text-primary-light radius-4 px-16 py-10 active"
+                                id="pills-button-icon-home-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-button-icon-home" type="button" role="tab"
+                                aria-controls="pills-button-icon-home" aria-selected="true">
+                                <iconify-icon icon="mage:image-upload" class="text-xl"></iconify-icon>
+                                <span class="line-height-1">Upload Photos</span>
+                            </button>
+                        </li>
+
+                        <li class="nav-item" role="presentation">
+                            <button
+                                class="nav-link d-flex align-items-center gap-2 fw-semibold text-primary-light radius-4 px-16 py-10"
+                                id="pills-button-icon--viewdetails-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-button-icon-viewdetails" type="button" role="tab"
+                                aria-controls="pills-button-icon-viewdetails" aria-selected="false">
+                                <iconify-icon icon="fluent:people-team-20-regular" class="text-xl"></iconify-icon>
+                                <span class="line-height-1">View Event Info</span>
+                            </button>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content" id="pills-tab-fourContent">
+                        <div class="tab-pane fade show active" id="pills-button-icon-home" role="tabpanel"
+                            aria-labelledby="pills-button-icon-home-tab" tabindex="0">
+                            <div class="col-xxl-12 col-sm-12">
+                                <div id="upload-status"></div>
+                                <div class="col-md-12">
+                                    <div class="card h-100 p-0">
+
+                                        <div class="card-body p-24">
+
+                                            <div class="upload-image-wrapper d-flex align-items-center  flex-wrap">
+                                                <div class="uploaded-imgs-container d-flex gap-3 flex-wrap"></div>
+
+                                                <label
+                                                    class="upload-file-multiple h-120-px w-120-px border input-form-light radius-8 overflow-hidden border-dashed bg-neutral-50 bg-hover-neutral-200 d-flex align-items-center flex-column justify-content-center gap-1"
+                                                    for="upload-file-multiple">
+                                                    <iconify-icon icon="solar:camera-outline"
+                                                        class="text-xl text-secondary-light"></iconify-icon>
+                                                    <span class="fw-semibold text-secondary-light">Upload</span>
+                                                    <input id="upload-file-multiple" accept="image/*" type="file" hidden multiple>
+                                                </label>
+                                            </div>
+
+
+                                        </div>
+                                        <div id="upload-btn-div">
+                                            <button id="upload-btn"
+                                                class="btn btn-success col-sm-12 col-md-2 flex-end">Upload
+                                                Images</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane fade" id="pills-button-icon-viewdetails" role="tabpanel"
+                            aria-labelledby="pills-button-icon-viewdetails-tab" tabindex="0">
+                            <div class="col-xxl-12 col-sm-12">
+                                <h1>tab 2</h1>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+    const fileInputMultiple = document.getElementById("upload-file-multiple");
+    const uploadedImgsContainer = document.querySelector(".uploaded-imgs-container");
+
+    // Array to store files manually
+    let uploadedFiles = [];
+
+    fileInputMultiple.addEventListener("change", (e) => {
+        const files = e.target.files;
+
+        Array.from(files).forEach(file => {
+            // Add the file to the manually managed array
+            uploadedFiles.push(file);
+
+            const src = URL.createObjectURL(file);
+
+            const imgContainer = document.createElement('div');
+            imgContainer.classList.add('position-relative', 'h-120-px', 'w-120-px', 'border', 'input-form-light', 'radius-8', 'overflow-hidden', 'border-dashed', 'bg-neutral-50');
+
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.classList.add('uploaded-img__remove', 'position-absolute', 'top-0', 'end-0', 'z-1', 'text-2xxl', 'line-height-1', 'me-8', 'mt-8', 'd-flex');
+            removeButton.innerHTML = '<iconify-icon icon="radix-icons:cross-2" class="text-xl text-danger-600"></iconify-icon>';
+
+            const imagePreview = document.createElement('img');
+            imagePreview.classList.add('w-100', 'h-100', 'object-fit-cover');
+            imagePreview.src = src;
+
+            imgContainer.appendChild(removeButton);
+            imgContainer.appendChild(imagePreview);
+            uploadedImgsContainer.appendChild(imgContainer);
+
+            removeButton.addEventListener('click', () => {
+                // Remove file from uploadedFiles array
+                const index = uploadedFiles.indexOf(file);
+                if (index > -1) {
+                    uploadedFiles.splice(index, 1); // Remove the file from the array
+                }
+
+                // Remove the file URL from memory
+                URL.revokeObjectURL(src);
+
+                // Remove the image container
+                imgContainer.remove();
+
+                // Update the input element's files list manually
+                updateFileInput();
+            });
+        });
+    });
+
+    // Update the file input with the modified files list
+    function updateFileInput() {
+        // Create a new DataTransfer object
+        const dataTransfer = new DataTransfer();
+
+        // Add the remaining files in the uploadedFiles array to the new DataTransfer object
+        uploadedFiles.forEach(file => {
+            dataTransfer.items.add(file);
+        });
+
+        // Update the input element's files list
+        fileInputMultiple.files = dataTransfer.files;
+    }
+
+    // Clear the images container and reset the file input
+    function clearImageContainer() {
+        // Clear the manually managed uploadedFiles array
+        uploadedFiles = [];
+
+        // Clear the uploaded images container
+        uploadedImgsContainer.innerHTML = '';
+
+        // Reset the file input element
+        fileInputMultiple.value = '';
+    }
+
+    // Handle the upload button click event
+    $('#upload-btn').on('click', function (e) {
+        let btn = document.getElementById('upload-btn');
+        btn.innerText = "Uploading Images ...";
+        btn.disabled = true;
+        var formData = new FormData();
+        var files = $('#upload-file-multiple')[0].files;
+
+        // Append all selected files to the FormData object
+        for (var i = 0; i < files.length; i++) {
+            formData.append('images', files[i]);
+        }
+
+        // CSRF token embedding
+        formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+
+        // Send the files using AJAX
+        $.ajax({
+            url: '{% url "upload-photos" event.event_key %}', // URL to the Django view
+            type: 'POST',
+            data: formData,
+            processData: false, // Don't process the data
+            contentType: false, // Let jQuery set the content type
+            success: function (response) {
+                btn.innerText = "Upload Images";
+                btn.disabled = false;
+
+                // Clear the image container and input after a successful upload
+                clearImageContainer();
+
+                if (response.tags == 'success') {
+                    // Optional: Show a success message
+                            $('#upload-status').html(`<div class="alertBox alert alert-success bg-success-100 text-success-600 border-success-600 border-start-width-4-px border-top-0 border-end-0 border-bottom-0 px-24 py-13 mb-0 fw-semibold text-lg radius-4 d-flex align-items-center justify-content-between" role="alert">
+                    <div class="d-flex align-items-center gap-2">
+                        <iconify-icon icon="akar-icons:double-check" class="icon text-xl"></iconify-icon>
+                        ${response.message}
+                    </div>
+                    <button class="remove-button text-success-600 text-xxl line-height-1"> <iconify-icon icon="iconamoon:sign-times-light" class="icon"></iconify-icon></button>
+                </div>`);
+                }
+                else{
+                    
+                $('#upload-status').html(`<div class="alertBox alert alert-warning bg-warning-100 text-warning-600 border-warning-600 border-start-width-4-px border-top-0 border-end-0 border-bottom-0 px-24 py-13 mb-0 fw-semibold text-lg radius-4 d-flex align-items-center justify-content-between" role="alert">
+                <div class="d-flex align-items-center gap-2">
+                        <iconify-icon icon="mdi:alert-circle-outline" class="icon text-xl"></iconify-icon>
+                        ${response.message} 
+                    </div>
+                    <button class="remove-button text-warning-600 text-xxl line-height-1"> <iconify-icon icon="iconamoon:sign-times-light" class="icon"></iconify-icon></button>
+                </div>`);
+                }
+
+
+
+                console.log(response);
+                $('.remove-button').on('click', function () {
+                    $(this).closest('.alert').addClass('d-none')
+                });
+            },
+            error: function (xhr, status, error) {
+                btn.innerText = "Upload Images";
+                btn.disabled = false;
+
+                // Optional: Show an error message
+                $('#upload-status').html(`<div class="alertBox alert alert-warning bg-warning-100 text-warning-600 border-warning-600 border-start-width-4-px border-top-0 border-end-0 border-bottom-0 px-24 py-13 mb-0 fw-semibold text-lg radius-4 d-flex align-items-center justify-content-between" role="alert">
+                <div class="d-flex align-items-center gap-2">
+                <iconify-icon icon="mdi:alert-circle-outline" class="icon text-xl"></iconify-icon>
+                ${response.message} 
+            </div>
+            <button class="remove-button text-warning-600 text-xxl line-height-1"> <iconify-icon icon="iconamoon:sign-times-light" class="icon"></iconify-icon></button>
+        </div>`);
+            }
+        });
+    });
+
+
+</script>
+
+
+{% endblock content %}

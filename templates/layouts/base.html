@@ -1,0 +1,167 @@
+{% load static %}
+<!-- meta tags and other links -->
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faceble | {% block title %} {% endblock title %}</title>
+  <link rel="icon" type="image/png" href="{% static 'assets/images/brand/logo2.png' %}" sizes="16x16">
+ 
+    {% include 'inc/styles.html' %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+  <body>
+    <aside class="sidebar">
+  <button type="button" class="sidebar-close-btn">
+    <iconify-icon icon="radix-icons:cross-2"></iconify-icon>
+  </button>
+  <div>
+    <a href="{% url 'home' %}" class="sidebar-logo">
+      <img src="{% static 'assets/images/brand/logo1.png' %}" alt="site logo" class="light-logo">
+      <img src="{% static 'assets/images/brand/logo4.png' %}" alt="site logo" class="dark-logo">
+      <img src="{% static 'assets/images/brand/logo2.png' %}" alt="site logo" class="logo-icon">
+    </a>
+  </div>
+  <div class="sidebar-menu-area">
+    <ul class="sidebar-menu" id="sidebar-menu">
+      <li class="dropdown">
+        <a href="javascript:void(0)">
+          <iconify-icon icon="solar:home-smile-angle-outline" class="menu-icon"></iconify-icon>
+          <span>Dashboard</span>
+        </a>
+        <ul class="sidebar-submenu">
+          <li>
+            <a href="{% url 'home' %}"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Home</a>
+          </li>
+          <li>
+            <a href="{% url 'user-profile' %}"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Profile</a>
+          </li>
+        
+        </ul>
+      </li>
+      <li class="sidebar-menu-group-title">Events</li>
+      <li>
+        <a href="{% url 'add-event' %}">
+          <iconify-icon icon="basil:add-outline" class="menu-icon"></iconify-icon>
+          <span>New Event</span>
+        </a>
+      </li>
+      <li class="active">
+        <a href="{% url 'all-events' %}">
+          <iconify-icon icon="jam:task-list" class="menu-icon" ></iconify-icon>
+          <span>All Events</span>
+        </a>
+      </li>
+      <li>
+        <a href="email.html">
+          <iconify-icon icon="carbon:report" class="menu-icon"></iconify-icon>
+          <span>Event Reports</span>
+        </a>
+      </li>
+      
+  
+      <li class="sidebar-menu-group-title">Plans & Billing</li>
+      <li>
+        <a href="{% url 'add-balance' %}">
+          <iconify-icon   icon="solar:wallet-outline" class="menu-icon"></iconify-icon>
+          <span>Wallet System</span>
+        </a>
+     
+      <li>
+        <a href="{% url 'payment-history' %}">
+          <iconify-icon  icon="ic:baseline-history" class="menu-icon"></iconify-icon>
+          <span>Transaction History</span> 
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'invoice-list' %}">
+          <iconify-icon icon="hugeicons:invoice"  class="menu-icon"></iconify-icon>
+          <span>Invoice</span> 
+        </a>
+      </li>
+      <li>
+        <li>
+          <a href="{% url 'pricing-plans' %}">
+            <iconify-icon icon="material-symbols:subscriptions-outline" class="menu-icon"></iconify-icon>
+            <span>Subscription Plans</span>
+          </a>
+          </li>
+         
+      <li class="sidebar-menu-group-title">Others</li>
+    
+
+      <li class="dropdown">
+        <a href="#">
+          <iconify-icon icon="hugeicons:invoice-03" class="menu-icon"></iconify-icon>
+          <span>Referrals</span> 
+        </a>
+        <ul class="sidebar-submenu">
+          <li>
+            <a href="{% url 'refer-people' %}"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i>Refer People</a>
+          </li>
+          <li>
+            <a href="{% url 'referral-history' %}"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Referral History</a>
+          </li>
+          <li>
+            <a href="invoice-add.html"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Add new</a>
+          </li>
+          <li>
+            <a href="invoice-edit.html"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Edit</a>
+          </li>
+        </ul>
+      </li>
+
+     
+      <li class="dropdown">
+        <a href="javascript:void(0)">
+          <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+          <span>Settings</span> 
+        </a>
+        <ul class="sidebar-submenu">
+          <li>
+            <a href="company.html"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Company</a>
+          </li>
+          <li>
+            <a href="notification.html"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Notification</a>
+          </li>
+          <li>
+            <a href="notification-alert.html"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Notification Alert</a>
+          </li>
+          <li>
+            <a href="theme.html"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Theme</a>
+          </li>
+          <li>
+            <a href="currencies.html"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Currencies</a>
+          </li>
+          <li>
+            <a href="language.html"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Languages</a>
+          </li>
+          <li>
+            <a href="payment-gateway.html"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Payment Gateway</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+    </aside>
+
+
+    <main class="dashboard-main">
+        {% include 'inc/nav.html' %}
+
+
+        {% block content %}
+        
+        {% endblock content %}
+        
+        
+        {% include 'inc/footer.html' %} 
+    </main>
+   
+  
+    {% include 'inc/scripts.html' %}
+
+</body>
+</html>

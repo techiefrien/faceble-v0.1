@@ -1,0 +1,347 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} All Events {% endblock title %}
+
+{% block content %}
+
+
+
+<style>
+  * {
+margin: 0;
+
+padding: 0;
+
+box-sizing: border-box;
+}
+
+:root {
+--primary: #ffffff;
+
+--text: #272727;
+
+--accent: #5057fd;
+
+--accent-light: #eff3ff;
+}
+
+body {
+font-family: "Poppins", sans-serif;
+
+min-height: 100vh;
+
+color: var(--text);
+
+background: var(--primary);
+}
+
+a {
+text-decoration: none;
+
+color: currentColor;
+}
+
+li {
+list-style: none;
+
+line-height: 2;
+}
+
+span {
+font-size: 14px;
+}
+
+p {
+font-weight: 500;
+}
+
+.pricing__section {
+margin-block: 3rem;
+}
+
+.wrapper {
+max-width: 1240px;
+
+margin-inline: auto;
+
+padding-inline: 1rem;
+}
+
+.title {
+text-align: center;
+
+display: grid;
+
+gap: 1rem;
+
+place-items: center;
+}
+
+.title h2 {
+font-size: 40px;
+}
+
+.toggle__section {
+display: flex;
+
+gap: 1rem;
+
+align-items: center;
+}
+
+.toggle__section input {
+display: none;
+}
+
+.toggle__section .toggle__btn {
+display: flex;
+
+padding: 4px;
+
+background: var(--accent);
+
+border-radius: 2rem;
+
+width: 2.35rem;
+}
+
+.toggle__section .toggle__btn span {
+display: block;
+
+width: 1rem;
+
+height: 1rem;
+
+background: var(--primary);
+
+border-radius: 50%;
+}
+
+input:checked ~ .toggle__btn {
+justify-content: end;
+}
+
+.price__cards {
+margin-block: 2rem;
+
+display: grid;
+
+gap: 2rem;
+
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.price__card {
+padding: 2rem 1.5rem;
+
+box-shadow: 2px 0 24px #f7f7f7;
+
+border-radius: 1rem;
+
+display: inline-flex;
+
+gap: 1rem;
+
+flex-direction: column;
+}
+
+.price__details {
+flex: 1 1 auto;
+}
+
+.price__details h3 {
+font-size: 32px;
+
+line-height: 1.5;
+}
+
+.price__details ul {
+margin-block: 1rem;
+}
+
+
+
+hr {
+border: none;
+
+height: 0;
+
+border-bottom: 1px solid #ddd;
+}
+
+.price__card .price {
+font-size: 32px;
+
+font-weight: 600;
+
+letter-spacing: -2px;
+}
+
+
+.btn {
+display: inline-flex;
+
+align-items: center;
+
+justify-content: center;
+
+padding: 1rem 2rem;
+
+border-radius: 2rem;
+
+transition: 0.3s ease-in-out;
+}
+
+.bg__accent {
+background: var(--accent);
+
+color: var(--primary);
+}
+
+.bg__accent-2 {
+background: var(--accent-light);
+
+color: var(--accent);
+}
+
+.bg__primary {
+background: var(--primary);
+
+color: var(--accent);
+}
+
+.btn:hover {
+transform: scale(0.96);
+}
+
+</style>
+
+{% include 'inc/alert.html' %}
+
+<div class="dashboard-main-body">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
+      <h6 class="fw-semibold mb-0">Payments & Recharge</h6>
+      <ul class="d-flex align-items-center gap-2">
+        <li class="fw-medium">
+          <a href="{% url 'home' %}" class="d-flex align-items-center gap-1 hover-text-primary">
+            <iconify-icon  icon="fluent-mdl2:money" class="icon text-lg"></iconify-icon>
+            Payments
+          </a>
+        </li>
+        <li>-</li>
+        <li class="fw-medium">Wallet System</li>
+      </ul>
+    </div>
+  
+    <div class="row gy-4">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">My Wallet</h5>
+          </div>
+          <div class="card-body">
+            <div class="row gy-4">
+                <div class="col-lg-12">
+            
+                    
+                    <div class="row">
+                        <div class="col-lg-5 col-12">
+                          <div class="my-4">
+                            <h6>Balance</h6>
+                            <div class="wallet_balance-card" style="padding: 25px 25px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 6px 30px rgba(182, 186, 203, 0.3);">
+                              <h4 class="wallet_balance">{{request.user.profile.balance}} credits</h4>
+                              <p class="color-h font-15 mb-2 d-flex align-items-center gap-1"><iconify-icon icon="hugeicons:money-send-square" class="menu-icon"></iconify-icon><span>₹1 = 1
+                                  credits</span></p>
+                            </div>
+                          </div>
+                          <div class="dropdown-divider"></div>
+                          <form action="{% url 'add-balance' %}" id="payment-form" method="post">
+                            {% csrf_token %}
+                            <div class="my-4">
+                                <h6 class="">Add Credit</h6>
+                                <p class="color-h font-15 mb-2 d-flex align-items-center gap-1"><iconify-icon icon="hugeicons:money-send-square" class="menu-icon"></iconify-icon><span>Add credits in
+                                    the multiples of ₹5</span></p><label class="wallet_credit-input__DrGLh" data-credits="= 100 credits"
+                                  data-currency-symbol="₹" style="width: 100%;">
+                                  <input
+                                    class="form-control radius-8 p-24" type="number" placeholder="Amount"
+                                    step="5" required id="amount" min="100" value="100" name="amount">
+                                  <p class="input_fields-error" id="input-msg"></p>
+                                </label>
+                                <p class="mb-3 font-15 text-black text-start">Tax/GST will be added.<br><span class="color-h">Add a
+                                    minimum of&nbsp;₹100 for a seamless experience</span></p>
+                                <div class="d-flex justify-content-between gap-2 flex-wrap py-1">
+                                  <button class="btn rounded-pill btn-info-100 text-info-600 radius-8 px-20 py-11 quick-payment-btn" value="150" type="button" >₹150</button>
+                                    <button class="btn rounded-pill btn-info-100 text-info-600 radius-8 px-20 py-11 quick-payment-btn" value="300" type="button">₹300</button>
+                                    <button class="btn rounded-pill btn-info-100 text-info-600 radius-8 px-20 py-11 quick-payment-btn" value="500" type="button">₹500</button>
+                                    <button class="btn rounded-pill btn-info-100 text-info-600 radius-8 px-20 py-11 quick-payment-btn" value="1000" type="button">₹1000</button>
+                                  </div>
+                                <button id="add-btn" type="submit" title="Add"class="btn btn-primary-600 radius-8 px-20 py-11 w-100 my-5">Add</button>
+                              </div>
+                          </form>
+                          <div>
+                            <p class="font-15 text-black">For any queries about your wallet, kindly&nbsp;<a href="/helpdesk"
+                                class="text-decoration-underline" target="_blank">Contact Us</a></p>
+                          </div>
+                        </div>
+                        <div class="ms-lg-4 col-lg-6 col-12">
+                          <div class="dropdown-divider d-md-none d-block"></div>
+                          <div class="my-4">
+                            <h6 class="d-flex align-items-center gap-1"><iconify-icon icon="hugeicons:money-send-square" class="menu-icon"></iconify-icon>Current Subscription</h6>
+                            <div class="wallet_box" style="padding: 25px 25px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 6px 30px rgba(182, 186, 203, 0.3);">
+                              <div class="card-body p-24">
+                                <div class="w-64-px h-64-px d-inline-flex align-items-center justify-content-center bg-lilac-600 text-white mb-16 radius-12">
+                                    <iconify-icon icon="solar:medal-ribbons-star-bold" class="h5 mb-0"></iconify-icon> 
+                                </div>
+                                <h6 class="mb-8">{{request.user.profile.plan}}</h6>
+                                <p class="card-text mb-8 text-secondary-light">{{request.user.profile.plan.descriptino}}</p>
+                                <a href="{% url 'pricing-plans' %}" class="btn text-lilac-600 hover-text-lilac px-0 py-0 mt-16 d-inline-flex align-items-center gap-2"> 
+                                    Upgrade Plan <iconify-icon icon="iconamoon:arrow-right-2" class="text-xl"></iconify-icon> 
+                                </a>
+                            </div>
+                            </div>
+                            <div class="wallet_box">
+                              <p class="font-15 text-black font-normal mb-2">Get or renew Kwikpic subscriptions using these credits
+                              </p>
+                              <p class="m-0"><a href="https://faceble.simplyone.in/contact/" target="_blank"
+                                  class="text-decoration-underline font-15">Contact Support</a></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <script>
+        var minAmount = 150
+        document.getElementById('amount').value = minAmount
+
+      document.getElementById('add-btn').addEventListener('click' , (e)=>{
+        e.preventDefault();
+        let amount = document.getElementById('amount').value;
+        if(amount<minAmount){
+            document.getElementById('amount').value = minAmount
+            document.getElementById('input-msg').innerText = `Minimum Amount should be greater or equal to ${minAmount}`
+        }
+        else{
+            document.getElementById('payment-form').submit()
+        }
+      })
+
+      console.log('hello world')
+      let quick_payment_btn = document.querySelectorAll('.quick-payment-btn')
+      quick_payment_btn.forEach((value , index)=>{
+        value.addEventListener('click' , (e)=>{
+            document.getElementById('amount').value = parseInt(e.target.value)
+        })
+      })
+
+
+    </script>
+
+{% endblock content %}

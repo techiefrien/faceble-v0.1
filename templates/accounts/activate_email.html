@@ -1,0 +1,64 @@
+{% extends 'layouts/authbase.html' %}
+{% load static %}
+
+{% block title %} Sign In {% endblock title %}
+
+
+
+{% block content %}
+
+{% include 'inc/alert.html' %}
+                 
+<section class="auth bg-base d-flex flex-wrap">  
+    <div class="auth-left d-lg-block d-none">
+        <div class="d-flex align-items-center flex-column h-100 justify-content-center">
+            <img style="height: 100vh; margin:0" 
+            src="{% static 'assets/images/active-email.svg' %}" alt="">
+        </div>
+    </div>
+    <div class="auth-right py-32 px-24 d-flex flex-column justify-content-center">
+        <div class="max-w-464-px mx-auto w-100">
+            <div>
+                <a href="{% url 'home' %}" class="mb-40 max-w-290-px">
+                    <img src="{% static 'assets/images/brand/logo1.png' %}" alt="" height="30" width="200">
+                </a>
+                <h4 class="mb-12">Activate your Account</h4>
+                <p class="mb-32 text-secondary-light text-lg">To get approved as offical user , verify your email</p>
+            </div>
+            <form action="{% url 'activate-email-manually' %}" method="post" id="sign-in-form">
+                {% csrf_token %}
+            
+                <div class="icon-field mb-16">
+                    <span class="icon top-50 translate-middle-y">
+                        <iconify-icon icon="mage:email"></iconify-icon>
+                    </span>
+                    <input required type="email" name="email" class="form-control h-56-px bg-neutral-50 radius-12" placeholder="Email">
+                </div>
+            
+         
+       
+
+                <button type="submit" id="submit-btn" class="btn btn-primary text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"> Sign In</button>
+
+              
+                <div class="mt-32 text-center text-sm">
+                    <p class="mb-0">Back to Sign In <a href="{% url 'sign-in' %}" class="text-primary-600 fw-semibold">Sign In</a></p>
+                </div>
+                
+                
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    let submitBtn = document.getElementById('submit-btn');
+    let signUpForm = document.getElementById('sign-in-form');
+
+    signUpForm.addEventListener('submit' , ()=>{
+        submitBtn.innerText = "Loading...."
+        submitBtn.disabled = true;
+    })
+</script>
+
+{% endblock content %}

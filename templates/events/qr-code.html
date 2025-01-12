@@ -1,0 +1,149 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} QR Code {% endblock title %}
+
+{% block content %}
+
+
+
+{% include 'inc/alert.html' %}
+
+<script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+
+<div class="dashboard-main-body">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
+        <h6 class="fw-semibold mb-0">QR Code Generator</h6>
+        <ul class="d-flex align-items-center gap-2">
+            <li class="fw-medium">
+                <a href="index.html" class="d-flex align-items-center gap-1 hover-text-primary">
+                    <iconify-icon icon="solar:home-smile-angle-outline" class="icon text-lg"></iconify-icon>
+                    Dashboard
+                </a>
+            </li>
+            <li>-</li>
+            <li class="fw-medium">Events - QR Code</li>
+        </ul>
+    </div>
+
+    <div class="card h-100 p-0 radius-12">
+        <div class="card-body p-24">
+            <form action="#">
+                <div class="row gy-4">
+                    <div class="col-md-6">
+                        <label for="imageUpload" class="form-label fw-semibold text-secondary-light text-md mb-8">QR
+                            Code</label>
+                        <div id="canvas"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <label for="imageUploadTwo"
+                                class="form-label fw-semibold text-secondary-light text-md mb-8">Logo <span
+                                    class="text-secondary-light fw-normal">(140px X 140px)</span></label>
+                            <input type="file" class="form-control radius-8" id="qr-logo">
+                        </div>
+                        <div class="mt-4 py-4">
+                            <label for="imageUploadTwo"
+                                class="form-label fw-semibold text-secondary-light text-md mb-8">Choose Format To
+                                download</label>
+                            <select name="format" id="format" class="form-select">
+                                <option value="png">PNG</option>
+                                <option value="jpeg">JPEG</option>
+                            </select>
+                        </div>
+                        <div class="mt-4 py-4">
+                            <label for="imageUploadTwo"
+                                class="form-label fw-semibold text-secondary-light text-md mb-8">Choose QR Dots</label>
+                            <select name="format" id="dot-style" class="form-select">
+                                <option value='rounded'>Rounded</option>
+                                <option value="dots" selected>Dots</option>
+                                <option value="classy">Classy</option>
+                                <option value="classy-rounded">Classy-Rounded</option>
+                                <option value="square">Square</option>
+                                <option value="extra-rounded">Extra-Rounded</option>
+                            </select>
+                        </div>
+                        <button id="download-btn" class="btn btn-primary mt-4 d-flex"><iconify-icon icon="typcn:download" class="mx-1" width="24" height="24"></iconify-icon> Download</button>
+
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    const qrCode = new QRCodeStyling({
+        width: 300,
+        height: 300,
+        type: "svg",
+        data: "{{url}}",
+        image: "https://i.imgur.com/KMNQVvN.png",
+        dotsOptions: {
+            color: "#4267b2",
+            type: "dots"
+        },
+        backgroundOptions: {
+            color: "#e9ebee",
+        },
+        imageOptions: {
+            crossOrigin: "anonymous",
+            margin: 10
+        } , 
+        cornersSquareOptions:{
+            type:'extra-rounded' , 
+        } , 
+        cornersDotOptions:{
+            type:'dot'
+        }
+    });
+
+    // Handle file input change
+    document.getElementById('qr-logo').addEventListener('change', (e) => {
+        const file = e.target.files[0]; // Get the selected file
+        if (file) {
+            const reader = new FileReader();
+
+            // Load the file as a data URL
+            reader.onload = function (event) {
+                qrCode.update({
+                    image: event.target.result, // Update the QR code image
+                });
+
+                // Optionally, render the QR code again
+                qrCode.append(document.getElementById("qr-container"));
+            };
+
+            reader.readAsDataURL(file); // Convert the file to a data URL
+        }
+    });
+
+
+    document.getElementById('dot-style').addEventListener('change', (e) => {
+        const dotType = e.target.value;
+
+        qrCode.update({
+    dotsOptions: {
+        type: dotType // Replace dotType with the desired value, e.g., "rounded", "square", etc.
+    }
+});
+
+        // Optionally, render the QR code again
+        qrCode.append(document.getElementById("qr-container"));
+
+    })
+
+
+    qrCode.append(document.getElementById("canvas"));
+    //qrCode.download({ name: "qr", extension: "png" });
+
+document.getElementById('download-btn').addEventListener('click' , (e)=>{
+    const format = document.getElementById('format').value
+    qrCode.download({ name: "qr", extension: `${format}` });
+})
+
+</script>
+
+{% endblock content %}

@@ -1,0 +1,464 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block title %} Add Event {% endblock title %}
+
+
+{% block content %}
+
+{% include 'inc/alert.html' %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
+<style>
+  @media screen and (max-width: 767px) {
+    .evnt-btn-grp2{
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+    }
+  }
+
+
+  ::-webkit-file-upload-button{
+    background-color: #5956E9 !important;
+    color: white !important;
+    border: none !important;
+    padding: 0 10px !important;
+    border-radius: 25px !important;
+    position: relative !important;
+    top:-6px !important;
+    
+}
+
+input{
+    height: 3rem;
+}
+
+</style>
+
+
+<style>
+  /*=============== GOOGLE FONTS ===============*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+/*========== Colors ==========*/
+--hue: 240;
+--first-color: hsl(var(--hue), 16%, 18%);
+--first-color-alt: hsl(var(--hue), 16%, 12%);
+--title-color: hsl(var(--hue), 8%, 15%);
+--text-color: hsl(var(--hue), 8%, 35%);
+--body-color: hsl(var(--hue), 100%, 99%);
+--container-color: #FFF;
+
+/*========== Font and typography ==========*/
+--body-font: 'Poppins', sans-serif;
+--big-font-size: 1.5rem;
+--normal-font-size: .938rem;
+
+/*========== z index ==========*/
+--z-modal: 1000;
+}
+
+@media screen and (min-width: 968px) {
+:root {
+--big-font-size: 1.75rem;
+--normal-font-size: 1rem;
+}
+}
+
+/*=============== BASE ===============*/
+*{
+box-sizing: border-box;
+padding: 0;
+margin: 0;
+}
+
+body,
+button{
+font-family: var(--body-font);
+font-size: var(--normal-font-size);
+}
+
+
+
+button{
+cursor: pointer;
+border: none;
+outline: none;
+}
+
+img{
+max-width: 100%;
+height: auto;
+}
+
+/*=============== MODAL ===============*/
+.container{
+margin-left: 1rem;
+margin-right: 1rem;
+}
+
+.modal{
+height: 100vh;
+display: grid;
+place-items: center;
+}
+
+.modal__button{
+display: inline-block;
+background-color: var(--first-color);
+color: #FFF;
+padding: 1rem 1.25rem;
+border-radius: .5rem;
+transition: .3s;
+}
+
+.modal__button:hover{
+background-color: var(--first-color-alt);
+}
+
+.modal__container{
+position: absolute;
+top: 0;
+left: 0;
+background-color: hsla(var(--hue), 18%, 75%, .8);
+width: 100%;
+height: 100%;
+display: grid;
+align-items: flex-end;
+overflow: hidden;
+transition: all .3s;
+z-index: var(--z-modal);
+visibility: hidden;
+opacity: 0;
+
+/*=== Effect 3 ===*/
+/* perspective: 1000px; */
+}
+
+.modal__content{
+position: relative;
+background-color: var(--container-color);
+text-align: center;
+padding: 3rem 2rem 2rem;
+border-radius: 1rem 1rem 0 0;
+transition: all .3s;
+
+/*=== Effect 1 ===*/
+transform: translateY(10%);
+
+/*=== Effect 2 ===*/
+/* transform: scale(.5) translateY(10%); */
+
+/*=== Effect 3 ===*/
+/* transform: rotateX(65deg) scale(.75) translateY(10%);
+transform-origin: 50% 100%; */
+}
+
+.modal__img{
+width: 150px;
+margin-bottom: .75rem;
+}
+
+.modal__close{
+display: inline-flex;
+background-color: var(--first-color);
+border-radius: .25rem;
+color: #FFF;
+font-size: 1.5rem;
+position: absolute;
+top: 2rem;
+right: 2rem;
+cursor: pointer;
+}
+
+.modal__title{
+font-size: var(--big-font-size) !important;
+color: var(--title-color);
+font-weight: 500;
+}
+
+.modal__description{
+margin-bottom: 1.5rem;
+}
+
+.modal__button-width{
+width: 90%;
+}
+
+.modal__button-link{
+display: block;
+margin: 1rem auto 0;
+background-color: transparent;
+color: var(--first-color);
+font-weight: 500;
+}
+
+/* Show modal */
+.show-modal{
+visibility: visible;
+opacity: 1;
+}
+
+.show-modal .modal__content{
+/*=== Effect 1 ===*/
+transform: translateY(0);
+
+/*=== Effect 2 ===*/
+/* transform: scale(1) translateY(0); */
+
+/*=== Effect 3 ===*/
+/* transform: rotateX(0) scale(1) translateY(0); */
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* For small devices */
+@media screen and (min-width: 576px){
+.modal__content{
+margin: auto;
+width: 380px;
+border-radius: 1.25rem;
+}
+
+.modal__img{
+width: 170px;
+}
+}
+</style>
+
+
+
+
+<div class="dashboard-main-body">
+
+ 
+
+
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
+  <h6 class="fw-semibold mb-0">Add Events</h6>
+  <ul class="d-flex align-items-center gap-2">
+    <li class="fw-medium">
+      <a href="{% url 'home' %}" class="d-flex align-items-center gap-1 hover-text-primary">
+        <iconify-icon icon="solar:home-smile-angle-outline" class="icon text-lg"></iconify-icon>
+        Dashboard
+      </a>
+    </li>
+    <li>-</li>
+    <li class="fw-medium">Add Event</li>
+  </ul>
+</div>
+    
+
+    <div class="row gy-4">
+      <div class="col-md-12">
+        <div class="card " style="padding: 0 ; padding-top:30px;">
+          <div class="card-header">
+            <h6 class="mb-4 mt-4" >Create New Event</h6>
+          </div>
+          <div class="card-body">
+           <form action="{% url 'add-event' %}" method="post" enctype="multipart/form-data" class="form" id="event-form">
+           {% csrf_token %}
+            <div class="row gy-3">
+             <div class="col-md-6">
+              <div class="col-12">
+                <label class="form-label">Event Name</label>
+                <input type="text" name="name" id="ename" class="form-control" placeholder="Enter the event name" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Event banner </label>
+                <input class="form-control form-control-sm mb-8"  id="ebanner" name="banner" type="file" required>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Event Category</label>
+                <select name="category" class="form-select" id="ecat"  required>
+                    <option value="" selected disabled>Select Event Category</option>
+                    {% for cat in event_category %}
+                        <option value="{{cat.categoy_name}}">{{cat.categoy_name}}</option>
+                    {% endfor %}
+                </select>
+              </div>
+             </div>
+            <div class="col-md-6">
+              <div class="col-12">
+                <label class="form-label">Select Plan</label>
+                <select name="plan"  class="form-select" id="plan-selection" required>
+                    <option value="" selected disabled>Select Pricing Plan</option>
+                    {% for plan in plans %}
+                        <option value="{{plan.id}}">Rs.{{plan.price}}</option>
+                    {% endfor %}
+                </select>
+
+                <div id="plan_info" class="table-responsive">
+                
+                </div>
+
+                <div class="col-12" style="margin-top: 10px;">
+                  <label class="form-label">Held On </label>
+                  <input class="form-control form-control" id="edate" name="date" type="date" required>
+                </div>
+
+              </div>
+            </div>
+             
+
+              <div class="d-flex flex-wrap justify-content-between align-items-center mt-4 mb-3 gap-3" style=" margin-top:30px !important; margin: 30px 0;">
+                <!-- Add Event Button -->
+                <button type="button" class="btn btn-primary" id="open-modal" >
+                  <i class="fa-solid fa-folder-plus"></i> Add Event
+                </button>
+              
+                <!-- Event Button Group -->
+                <div class="d-flex flex-wrap gap-3">
+                  <button type="reset" class="btn btn-danger">
+                    <i class="fa-solid fa-rotate-right"></i> Reset
+                  </button>
+                  <a class="btn btn-lilac-600" href="{% url 'all-events' %}">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> View All
+                  </a>
+                </div>
+              </div>
+              
+          
+            </div>
+
+            <div class="modal__container" id="modal-container">
+              <div class="modal__content">
+                  <div class="modal__close close-modal" title="Close">
+                      <i class='bx bx-x'></i>
+                  </div>
+            
+                  <img src="assets/img/star-trophy.png" alt="" class="modal__img">
+            
+                  <h1 class="modal__title">Confirmation for New Event!</h1>
+                  <p class="modal__description">Proceed To Create new event</p>
+            
+                  <button type="submit" id="form-submit" class="modal__button modal__button-width">
+                      Proceed
+                  </button>
+            
+                  <button class="modal__button-link close-modal">
+                      Close
+                  </button>
+              </div>
+            </div>
+            
+
+           </form>
+          </div>
+        </div><!-- card end -->
+      
+      </div>
+   
+     
+    </div>
+    
+  </div>
+
+
+
+  <script>
+    let planSelection = document.getElementById("plan-selection");
+    planSelection.addEventListener('change' , (e)=>{
+      console.log(e.target.value);
+
+      $.ajax({
+        url : '{% url "plan-details" %}' , 
+        method : 'POST' ,
+        data : {
+          'csrfmiddlewaretoken' : "{{csrf_token}}" , 
+          "plan_id" : e.target.value
+        } , 
+        success : function(res){
+          console.log(res);
+          console.log(res.upload_limit)
+          $('#plan_info').html('')
+          let element =  `  <table class="table table-responsive" style="padding:20px; margin-top: 20px;">
+                    <tr>
+                    <th>Upload Limit</th>
+                    <th>selfie Limit</th>
+                    <th>Ai Matches</th>
+                    <th>Photo Selection</th>
+                  </tr>
+                  <tr>
+                    <td>${res.upload_limit}</td>
+                    <td>${res.selfie_limit}</td>
+                    <td>${res.ai_match}</td>
+                    <td style="color: ${res.photo_selection ? 'green' : 'red'} !important;">
+                      ${res.photo_selection ? 'Applicable' : 'Not Available'}
+                     </td>
+                  </tr>
+                 
+                  <tr>
+                    <tH>Photo Selection Limit</tH>
+                    <th>Analytical Report</th>
+                    <th>E-Album</th>
+                    <th>Support</th>
+                  </tr>
+                  <tr>
+                    <td>${res.photo_selection_limit}</td>
+                     <td style="color: ${res.analytical_report ? 'green' : 'red'} !important;">
+                      ${res.analytical_report ? 'Applicable' : 'Not Available'}
+                     </td>
+                    <td style="color: ${res.e_album ? 'green' : 'red'} !important;">
+                      ${res.e_album ? 'Applicable' : 'Not Available'}
+                     </td>
+                    <td>${res.support}</td>
+                  </tr>
+                  </table>  `
+          $('#plan_info').append(element);
+
+        }
+      })
+    })
+  </script>
+
+
+<script>
+  /*=============== SHOW MODAL ===============*/
+const showModal = (openButton, modalContent) =>{
+const openBtn = document.getElementById(openButton),
+modalContainer = document.getElementById(modalContent)
+
+
+function input_validator(){
+    let eventName = document.getElementById('ename').value.trim();
+    let eventBanner = document.getElementById('ebanner').files.length; // For file input
+    let eventCategory = document.getElementById('ecat').value.trim();
+    let eventPlan = document.getElementById('plan-selection').value.trim();
+    let eventDate = document.getElementById('edate').value.trim();
+
+    if (eventName && eventBanner && eventCategory && eventPlan && eventDate) {
+      return false
+      
+    }
+    return true
+}
+
+if(openBtn && modalContainer){
+openBtn.addEventListener('click', ()=>{
+    if(input_validator()){
+      document.getElementById('form-submit').click()
+    }
+    else{
+      modalContainer.classList.add('show-modal')
+
+    }
+})
+}
+}
+showModal('open-modal','modal-container')
+
+/*=============== CLOSE MODAL ===============*/
+const closeBtn = document.querySelectorAll('.close-modal')
+
+function closeModal(){
+const modalContainer = document.getElementById('modal-container')
+modalContainer.classList.remove('show-modal')
+}
+closeBtn.forEach(c => c.addEventListener('click', closeModal))
+</script>
+  
+
+{% endblock content %}

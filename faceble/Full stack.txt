@@ -1,0 +1,39 @@
+Full stack 
+-------------------
+    Front-End 
+    ------------
+        HTML 
+        CSS 
+            BOOTSTRAP
+            TAILwind
+        JAVA SCRIPT 
+            Jquery
+            ajax 
+            REACT 
+
+    Back-end
+    -----------
+        PYTHON 
+        DJANGO 
+            ARCT , PATTERN ,ORM
+        EXPRESS js
+        API's
+            RESTFUL
+
+    DATABASE
+    ---------
+        SQL 
+        Mango DB 
+
+    TOOLS
+    ------
+        IDE's 
+        version control - git and git-hub
+        hosting tools 
+        extensions 
+        AWS 
+        NPM 
+        Node Js
+
+
+MERN - Mango DB , Express js , React js , Node js

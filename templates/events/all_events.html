@@ -1,0 +1,289 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} All Events {% endblock title %}
+
+{% load static %}
+
+{% block content %}
+
+
+
+{% include 'inc/alert.html' %}
+
+
+<style>
+
+#dt-search-0{
+      text-align: left;
+      padding-left: 10px;
+    }
+    th{
+      text-align: left !important;
+    }
+
+
+    #table-div{
+    overflow-x: visible; 
+
+  }
+
+/* Customize Scrollbar */
+#table-div::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+#table-div::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Background of the track */
+    border-radius: 8px; /* Rounded corners */
+}
+
+#table-div::-webkit-scrollbar-thumb {
+    background-color: grey; /* Scrollbar thumb color */
+    border-radius: 8px; /* Rounded corners */
+    border: 2px solid #f0f0f0; /* Space between thumb and track */
+}
+
+/* Hover Effect for Scrollbar */
+#table-div::-webkit-scrollbar-thumb:hover {
+    background-color: grey; /* Darker thumb color on hover */
+}
+
+/* Firefox Scrollbar */
+#table-div {
+    scrollbar-width: thin; /* Make scrollbar thinner */
+    scrollbar-color:grey #f0f0f0; /* Thumb and track color */
+}
+
+  @media screen and (max-width:768px) {
+    #table-div{
+      overflow-x: scroll; 
+    } 
+  }
+
+  /* Wrapper for the button and dropdown */
+  .menu-container {
+    position: relative; /* Keep the dropdown positioned relative to this container */
+    display: inline-block;
+    z-index: 100;
+  }
+
+  /* Styling the button */
+  .menu-button {
+    border: none;
+    background: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: -1;
+  }
+
+  /* Styling the dropdown menu */
+  .menu-options {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 30px; /* Below the button */
+    right: 0;
+    background-color:  #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 1000;
+    opacity: 0; /* Invisible by default */
+    transform: translateY(-10px); /* Slide up for animation */
+    transition: opacity 0.2s ease, transform 0.2s ease; /* Smooth fade-in */
+  }
+
+  /* Show dropdown with fade-in effect */
+  .menu-options.show {
+    display: block;
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* Back to original position */
+  }
+
+  /* Styling each menu item */
+  .menu-options a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    white-space: nowrap; /* Prevents text wrapping */
+  }
+
+  /* Hover effect for menu items */
+  .menu-options a:hover {
+    background-color: #f0f0f0;
+  }
+</style>
+<style>
+  #dt-search-0{
+    text-align: left;
+    padding-left: 10px;
+  }
+  th{
+    text-align: left !important;
+  }
+</style>
+
+<link rel="icon" type="image/png" href="{% static 'assets/images/favicon.png' %}" sizes="16x16">
+<!-- remix icon font css  -->
+<link rel="stylesheet" href="{% static 'assets/css/remixicon.css' %}">
+<!-- BootStrap css -->
+<link rel="stylesheet" href="{% static 'assets/css/lib/bootstrap.min.css' %}">
+<!-- Apex Chart css -->
+<link rel="stylesheet" href="{% static 'assets/css/lib/apexcharts.css' %}">
+<!-- Data Table css -->
+<link rel="stylesheet" href="{% static 'assets/css/lib/dataTables.min.css' %}">
+<!-- Text Editor css -->
+<link rel="stylesheet" href="{% static 'assets/css/lib/editor-katex.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/lib/editor.atom-one-dark.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/lib/editor.quill.snow.css' %}">
+<!-- Date picker css -->
+<link rel="stylesheet" href="{% static 'assets/css/lib/flatpickr.min.css' %}">
+<!-- Calendar css -->
+<link rel="stylesheet" href="{% static 'assets/css/lib/full-calendar.css' %}">
+<!-- Vector Map css -->
+<link rel="stylesheet" href="{% static 'assets/css/lib/jquery-jvectormap-2.0.5.css' %}">
+<!-- Popup css -->
+<link rel="stylesheet" href="{% static 'assets/css/lib/magnific-popup.css' %}">
+<!-- Slick Slider css -->
+<link rel="stylesheet" href="{% static 'assets/css/lib/slick.css' %}">
+<!-- main css -->
+<link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+
+<div class="dashboard-main-body">
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
+    <h6 class="fw-semibold mb-0">All Events</h6>
+    <ul class="d-flex align-items-center gap-2">
+      <li class="fw-medium">
+        <a href="{% url 'home' %}" class="d-flex align-items-center gap-1 hover-text-primary">
+          <iconify-icon icon="solar:home-smile-angle-outline" class="icon text-lg"></iconify-icon>
+          Dashboard
+        </a>
+      </li>
+      <li>-</li>
+      <li class="fw-medium">All Events</li>
+    </ul>
+  </div>
+
+  <div class="card basic-data-table">
+    <div class="card-header">
+      <h5 class="card-title mb-0">All Transaction</h5>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive" id="table-div">
+        <table class="table bordered-table mb-0" id="dataTable" data-page-length='10'>
+          <thead>
+            <tr>
+              <th scope="col">
+                <div class="form-check style-check d-flex align-items-center">
+                  <label class="form-check-label">
+                    S.L
+                  </label>
+                </div>
+              </th>
+              <th scope="col">Name </th>
+              <th scope="col">Event Key</th>
+              <th scope="col">Category</th>
+              <th scope="col">Plan</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+           {% for event in request.user.events.all %}
+           <tr>
+            <td>{{forloop.counter}}</td>
+            <td>
+              <div class="d-flex align-items-center">
+                <img src="{{ event.event_banner.url }}" alt="" class="flex-shrink-0 me-12 radius-8" height="40" width="40">
+                <span class="text-lg text-secondary-light fw-semibold flex-grow-1">{{ event.event_name }}</span>
+              </div>
+            </td>
+            <td>{{ event.event_key }}</td>
+            <td>{{ event.event_category }}</td>
+            <td>{{ event.plan }} - Rs.{{ event.plan.price }}</td>
+            <td class="text-start">
+              {% if event.is_active %}
+              <span class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Active</span>
+              {% else %}
+              <span class="bg-info-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Used</span>
+              {% endif %}
+            </td>
+            <td style="text-align: center;">
+              <div class="dropdown">
+                <button class="btn btn-text-secondary rounded-pill text-muted border-0 p-2 me-n1" type="button" id="vehiclesOverview" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <iconify-icon icon="charm:menu-kebab" width="16" height="16"></iconify-icon>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="vehiclesOverview">
+                  <a class="d-flex dropdown-item" style="padding-left: 0;" href="{% url 'view-info' event.event_key %}"><iconify-icon icon="gg:info" class="m-1" style="padding-left: 0;" width="20" height="20"></iconify-icon> View Info</a>
+                  <a class="d-flex dropdown-item" style="padding-left: 0;" href="{% url 'upload-photos' event.event_key %}"><iconify-icon icon="flowbite:upload-outline" class="m-1" style="padding-left: 0;" width="20" height="20"></iconify-icon> Upload Photos</a>
+                  <a class="d-flex dropdown-item" style="padding-left: 0;" href="{% url 'photo-gallery' event.event_key %}"><iconify-icon icon="solar:gallery-linear" class="m-1" style="padding-left: 0;" width="20" height="20"></iconify-icon> Photo Gallery</a>
+                  <a class="d-flex dropdown-item" style="padding-left: 0;" href="javascript:void(0);"><iconify-icon icon="gg:info" class="m-1" style="padding-left: 0;" width="20" height="20"></iconify-icon> Selfie Gallery</a>
+                  <a class="d-flex dropdown-item" style="padding-left: 0;" href="{% url 'qr-code' event.event_key %}"><iconify-icon icon="ic:sharp-qr-code-scanner"  class="m-1"  style="padding-left: 0;" width="20" height="20"></iconify-icon> QR Code</a>
+                 
+                </div>
+            </div>
+              
+            </td>
+          </tr>
+           {% endfor %}
+       
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<!-- jQuery library js -->
+<script src="{% static 'assets/js/lib/jquery-3.7.1.min.js' %}"></script>
+
+<!-- Data Table js -->
+<script src="{% static 'assets/js/lib/dataTables.min.js' %}"></script>
+
+
+<script>
+  let table = new DataTable('#dataTable');
+</script>
+<script>
+  function toggleMenu(button) {
+    const container = button.parentElement;
+    const menu = container.querySelector(".menu-options");
+
+    // Close any currently open dropdowns
+    document.querySelectorAll(".menu-options.show").forEach((openMenu) => {
+      if (openMenu !== menu) {
+        openMenu.classList.remove("show");
+        setTimeout(() => (openMenu.style.display = "none"), 200); // Wait for fade-out animation
+      }
+    });
+
+    // Toggle the current dropdown
+    if (menu.classList.contains("show")) {
+      menu.classList.remove("show");
+      setTimeout(() => (menu.style.display = "none"), 200); // Wait for fade-out
+    } else {
+      menu.style.display = "block"; // Ensure it's visible for the fade-in animation
+      setTimeout(() => menu.classList.add("show"), 10); // Trigger fade-in
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", function handleOutsideClick(event) {
+      if (!container.contains(event.target)) {
+        menu.classList.remove("show");
+        setTimeout(() => (menu.style.display = "none"), 200);
+        document.removeEventListener("click", handleOutsideClick);
+      }
+    });
+  }
+</script>
+
+{% endblock content %}

@@ -1,0 +1,64 @@
+
+<div class="row gy-4">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Events List</h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive" id="table-div">
+          <table class="table bordered-table mb-0">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Event Key</th>
+                <th scope="col">Category</th>
+                <th scope="col">Plan</th>
+                <th scope="col">Status</th>
+                <th scope="col" class="text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for event in request.user.events.all %}
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <img src="{{ event.event_banner.url }}" alt="" class="flex-shrink-0 me-12 radius-8" height="40" width="40">
+                    <span class="text-lg text-secondary-light fw-semibold flex-grow-1">{{ event.event_name }}</span>
+                  </div>
+                </td>
+                <td>{{ event.event_key }}</td>
+                <td>{{ event.event_category }}</td>
+                <td>{{ event.plan }} - Rs.{{ event.plan.price }}</td>
+                <td class="text-start">
+                  {% if event.is_active %}
+                  <span class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Active</span>
+                  {% else %}
+                  <span class="bg-info-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Used</span>
+                  {% endif %}
+                </td>
+                <td style="text-align: center;">
+                  <div class="dropdown">
+                    <button class="btn btn-text-secondary rounded-pill text-muted border-0 p-2 me-n1" type="button" id="vehiclesOverview" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <iconify-icon icon="charm:menu-kebab" width="16" height="16"></iconify-icon>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="vehiclesOverview">
+                      <a class="d-flex dropdown-item" style="padding-left: 0;" href="{% url 'view-info' event.event_key %}"><iconify-icon icon="gg:info" class="m-1" style="padding-left: 0;" width="20" height="20"></iconify-icon> View Info</a>
+                      <a class="d-flex dropdown-item" style="padding-left: 0;" href="{% url 'upload-photos' event.event_key %}"><iconify-icon icon="flowbite:upload-outline" class="m-1" style="padding-left: 0;" width="20" height="20"></iconify-icon> Upload Photos</a>
+                      <a class="d-flex dropdown-item" style="padding-left: 0;" href="{% url 'photo-gallery' event.event_key %}"><iconify-icon icon="solar:gallery-linear" class="m-1" style="padding-left: 0;" width="20" height="20"></iconify-icon> Photo Gallery</a>
+                      <a class="d-flex dropdown-item" style="padding-left: 0;" href="javascript:void(0);"><iconify-icon icon="gg:info" class="m-1" style="padding-left: 0;" width="20" height="20"></iconify-icon> Selfie Gallery</a>
+                      <a class="d-flex dropdown-item" style="padding-left: 0;" href="{% url 'qr-code' event.event_key %}"><iconify-icon icon="ic:sharp-qr-code-scanner"  class="m-1"  style="padding-left: 0;" width="20" height="20"></iconify-icon> QR Code</a>
+                     
+                    </div>
+                </div>
+                  
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

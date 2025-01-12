@@ -1,0 +1,80 @@
+<!-- meta tags and other links -->
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wowdash - Bootstrap 5 Admin Dashboard HTML Template</title>
+  <link rel="icon" type="image/png" href="{% static 'assets/images/favicon.png' %}" sizes="16x16">
+  <!-- remix icon font css -->
+  <link rel="stylesheet" href="{% static 'assets/css/remixicon.css' %}">
+  <!-- BootStrap css -->
+  <link rel="stylesheet" href="{% static 'assets/css/lib/bootstrap.min.css' %}">
+  <!-- Apex Chart css -->
+  <link rel="stylesheet" href="{% static 'assets/css/lib/apexcharts.css' %}">
+  <!-- Data Table css -->
+  <link rel="stylesheet" href="{% static 'assets/css/lib/dataTables.min.css' %}">
+  <!-- Text Editor css -->
+  <link rel="stylesheet" href="{% static 'assets/css/lib/editor-katex.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/lib/editor.atom-one-dark.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/lib/editor.quill.snow.css' %}">
+  <!-- Date picker css -->
+  <link rel="stylesheet" href="{% static 'assets/css/lib/flatpickr.min.css' %}">
+  <!-- Calendar css -->
+  <link rel="stylesheet" href="{% static 'assets/css/lib/full-calendar.css' %}">
+  <!-- Vector Map css -->
+  <link rel="stylesheet" href="{% static 'assets/css/lib/jquery-jvectormap-2.0.5.css' %}">
+  <!-- Popup css -->
+  <link rel="stylesheet" href="{% static 'assets/css/lib/magnific-popup.css' %}">
+  <!-- Slick Slider css -->
+  <link rel="stylesheet" href="{% static 'assets/css/lib/slick.css' %}">
+  <!-- main css -->
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+  
+</head>
+  <body>
+
+
+<main class="upload-selfie ">
+  
+    <div class="card"> 
+      <div class="card-body py-80 px-32 text-center align-items-center d-flex justify-content-center flex-column vh-100">
+        <label class="mb-16 upload-file h-120-px w-120-px border input-form-light rounded-circle overflow-hidden border-dashed bg-neutral-50 bg-hover-neutral-200 d-flex align-items-center flex-column justify-content-center gap-1" for="upload-file">
+          <iconify-icon icon="solar:camera-outline" class="text-xl text-secondary-light"></iconify-icon>
+          <span class="fw-semibold text-secondary-light">Upload</span>
+          <input id="upload-file" type="file" hidden="">
+        </label>
+        <h6 class="mb-16">Page not Found</h6>
+        <p class="text-secondary-light">Sorry, the page you are looking for doesn’t exist </p>
+        <a href="index.html" class="btn btn-primary-600 radius-8 px-20 py-11">Upload Selfie</a>
+      </div>
+    </div>
+  
+
+</main>
+  
+{% load static %}
+<!-- jQuery library js -->
+<script src="{% static 'assets/js/lib/jquery-3.7.1.min.js' %}"></script>
+<!-- Bootstrap js -->
+<script src="{% static 'assets/js/lib/bootstrap.bundle.min.js' %}"></script>
+<!-- Apex Chart js -->
+<script src="{% static 'assets/js/lib/apexcharts.min.js' %}"></script>
+
+<!-- Iconify Font js -->
+<script src="{% static 'assets/js/lib/iconify-icon.min.js' %}"></script>
+<!-- jQuery UI js -->
+<script src="{% static 'assets/js/lib/jquery-ui.min.js' %}"></script>
+<!-- Vector Map js -->
+<script src="{% static 'assets/js/lib/jquery-jvectormap-2.0.5.min.js' %}"></script>
+<script src="{% static 'assets/js/lib/jquery-jvectormap-world-mill-en.js' %}"></script>
+<!-- Popup js -->
+<script src="{% static 'assets/js/lib/magnifc-popup.min.js' %}"></script>
+<!-- Slick Slider js -->
+<script src="{% static 'assets/js/lib/slick.min.js' %}"></script>
+<!-- main js -->
+<script src="{% static 'assets/js/app.js' %}"></script>
+
+</body>
+</html>

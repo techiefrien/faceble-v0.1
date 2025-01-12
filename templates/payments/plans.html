@@ -1,0 +1,352 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} All Subscriptin plans{% endblock title %}
+
+{% block content %}
+
+
+
+{% include 'inc/alert.html' %}
+
+<style>
+    * {
+  margin: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #ffffff;
+
+  --text: #272727;
+
+  --accent: #5057fd;
+
+  --accent-light: #eff3ff;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+
+  min-height: 100vh;
+
+  color: var(--text);
+
+  background: var(--primary);
+}
+
+a {
+  text-decoration: none;
+
+  color: currentColor;
+}
+
+li {
+  list-style: none;
+
+  line-height: 2;
+}
+
+span {
+  font-size: 14px;
+}
+
+p {
+  font-weight: 500;
+}
+
+.pricing__section {
+  margin-block: 3rem;
+}
+
+.wrapper {
+  max-width: 1240px;
+
+  margin-inline: auto;
+
+  padding-inline: 1rem;
+}
+
+.title {
+  text-align: center;
+
+  display: grid;
+
+  gap: 1rem;
+
+  place-items: center;
+}
+
+.title h2 {
+  font-size: 40px;
+}
+
+.toggle__section {
+  display: flex;
+
+  gap: 1rem;
+
+  align-items: center;
+}
+
+.toggle__section input {
+  display: none;
+}
+
+.toggle__section .toggle__btn {
+  display: flex;
+
+  padding: 4px;
+
+  background: var(--accent);
+
+  border-radius: 2rem;
+
+  width: 2.35rem;
+}
+
+.toggle__section .toggle__btn span {
+  display: block;
+
+  width: 1rem;
+
+  height: 1rem;
+
+  background: var(--primary);
+
+  border-radius: 50%;
+}
+
+input:checked ~ .toggle__btn {
+  justify-content: end;
+}
+
+.price__cards {
+  margin-block: 2rem;
+
+  display: grid;
+
+  gap: 2rem;
+
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.price__card {
+  padding: 2rem 1.5rem;
+
+  box-shadow: 2px 0 24px #f7f7f7;
+
+  border-radius: 1rem;
+
+  display: inline-flex;
+
+  gap: 1rem;
+
+  flex-direction: column;
+}
+
+.price__details {
+  flex: 1 1 auto;
+}
+
+.price__details h3 {
+  font-size: 32px;
+
+  line-height: 1.5;
+}
+
+.price__details ul {
+  margin-block: 1rem;
+}
+
+
+
+hr {
+  border: none;
+
+  height: 0;
+
+  border-bottom: 1px solid #ddd;
+}
+
+.price__card .price {
+  font-size: 32px;
+
+  font-weight: 600;
+
+  letter-spacing: -2px;
+}
+
+
+.btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 1rem 2rem;
+
+  border-radius: 2rem;
+
+  transition: 0.3s ease-in-out;
+}
+
+.bg__accent {
+  background: var(--accent);
+
+  color: var(--primary);
+}
+
+.bg__accent-2 {
+  background: var(--accent-light);
+
+  color: var(--accent);
+}
+
+.bg__primary {
+  background: var(--primary);
+
+  color: var(--accent);
+}
+
+.btn:hover {
+  transform: scale(0.96);
+}
+
+</style>
+
+<div class="dashboard-main-body">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
+      <h6 class="fw-semibold mb-0">Payments & Recharge</h6>
+      <ul class="d-flex align-items-center gap-2">
+        <li class="fw-medium">
+          <a href="{% url 'home' %}" class="d-flex align-items-center gap-1 hover-text-primary">
+            <iconify-icon  icon="fluent-mdl2:money" class="icon text-lg"></iconify-icon>
+            Payments
+          </a>
+        </li>
+        <li>-</li>
+        <li class="fw-medium">Wallet System</li>
+      </ul>
+    </div>
+  
+    <div class="row gy-4">
+        <div class="col-lg-12">
+            <div class="card">
+              
+              <div class="card-body">
+                <div class="row gy-4">
+                    <div class="col-lg-12">
+                
+                        
+                        <section class="pricing__section">
+                            <div class="wrapper">
+                              <div class="title">
+                                <h2>Upgrade Your Plan</h2>
+                                <div class="toggle__section">
+                                  <span>Monthly</span>
+                                  <input type="checkbox" name="" id="check">
+                                  <label for="check" class="toggle__btn">
+                                    <span></span>
+                                  </label>
+                                  <span>Annualy</span>
+                                </div>
+                              </div>
+                              <div class="price__cards">
+                            
+                               {% for plan in plans %}
+                                    {% if plan.plan_name == "Trial Plan" %}
+                                        
+                                       
+                                        
+                                    {% else %}
+                                            {% if plan.is_premium %}
+                                                <div class="price__card bg__accent">
+                                                <div class="price__details">
+                                                <h3>{{plan.plan_name}}</h3>
+                                                <p>{{plan.descriptino}}</p>
+                                                <ul>
+                                                    {% for feature in plan.features.all %}
+                                                        {% if feature.is_available %}
+                                                            <li class="d-flex align-items-center"><iconify-icon icon="material-symbols:check-rounded" width="24" height="24"></iconify-icon>{{feature.feature_name}}</li>
+                                                        {% else %}
+                                                             <li class="d-flex align-items-center"><iconify-icon icon="charm:cross" width="24" height="24"></iconify-icon>{{feature.feature_name}}</li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                 </ul>
+                                                </div>
+                                                <hr>
+                                                <div class="d-flex align-items-baseline gap-1"> <strong>INR</strong><div class="price" data-monthly="{{plan.pricing}}" id="{{plan.plan_name}}" 
+                                                  data-yearly="{{plan.yearly_princing}}">{{plan.pricing}}</div> <span class="period">/monthly</span></div>
+
+                                               
+                                                {% if request.user.profile.plan.id == plan.id %}
+                                                  <a href="#" class="btn bg__primary">Current Plan</a>
+                                                {% else %}
+                                                  <a href="{% url 'upgrade-plan' plan.id %}" class="btn bg__primary">Subscribe</a>
+                                                {% endif %}
+                                                </div>
+                                            {% else %}
+                                                <div class="price__card bg__accent-2">
+                                                    <div class="price__details">
+                                                    <h3>{{plan.plan_name}}</h3>
+                                                    <p>{{plan.descriptino}}</p>
+                                                    <p>{{plan.yearly_pricing}}</p>
+                                                    <ul>
+                                                       {% for feature in plan.features.all %}
+                                                           {% if feature.is_available %}
+                                                               <li class="d-flex align-items-center"><iconify-icon icon="material-symbols:check-rounded" width="24" height="24"></iconify-icon>{{feature.feature_name}}</li>
+                                                           {% else %}
+                                                                <li class="d-flex align-items-center"><iconify-icon icon="charm:cross" width="24" height="24"></iconify-icon>{{feature.feature_name}}</li>
+                                                           {% endif %}
+                                                       {% endfor %}
+                                                    </ul>
+                                                    </div>
+                                                    <hr>
+                                                   <div class="d-flex align-items-baseline gap-1"> <strong>INR</strong><div class="price" 
+                                                    id="{{plan.plan_name}}" data-monthly="{{plan.pricing}}" 
+                                                    data-yearly="{{plan.yearly_princing}}">{{plan.pricing}}</div> <span class="period">/monthly</span></div>
+
+                                                  {% if request.user.profile.plan.id == plan.id %}
+                                                    <a href="#" class="btn bg__accent" aria-disabled="">Current Plans</a>
+                                                  {% else %}
+                                                    <a href="{% url 'upgrade-plan' plan.id %}" class="btn bg__accent">Subscribe</a>
+                                                    {% endif %}
+                                                </div> 
+                                            {% endif %}
+                                      
+                                    {% endif %}
+                               {% endfor %}
+                               
+                              </div>
+                            </div>
+                          </section>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+    </div>
+  </div>
+
+
+
+<script>
+    let toggleBtn = document.querySelector(".toggle__btn");
+    let showYearly = false ;
+toggleBtn.addEventListener('click' , (e)=>{
+      showYearly = !showYearly;
+      document.querySelectorAll('.price').forEach((value, index)=>{
+        value.innerHTML = showYearly ? value.dataset.yearly : value.dataset.monthly;
+      });
+      document.querySelectorAll('.period').forEach((value ,index)=>{
+        value.innerHTML = showYearly ? "/yearly" : "/monthly";
+      })
+    })
+
+</script>
+
+{% endblock content %}
